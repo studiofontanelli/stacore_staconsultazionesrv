@@ -1,0 +1,10 @@
+it/csi/stacore/staconsultazionesrv/util/adapter/exception/DtoConversionException.class
+it/csi/stacore/staconsultazionesrv/util/Tracer.class
+it/csi/stacore/staconsultazionesrv/util/CacheKeyGenerator.class
+it/csi/stacore/staconsultazionesrv/util/XssUtil.class
+it/csi/stacore/staconsultazionesrv/util/adapter/DtoAdapterInterface.class
+it/csi/stacore/staconsultazionesrv/util/Environment.class
+it/csi/stacore/staconsultazionesrv/util/XmlSerializer.class
+it/csi/stacore/staconsultazionesrv/util/Constants.class
+it/csi/stacore/staconsultazionesrv/util/ApplicationContextManager.class
+it/csi/stacore/staconsultazionesrv/util/adapter/CommonDtoAdapter.class
