@@ -1,0 +1,181 @@
+<list-query>
+
+
+
+	<query
+		name="it.csi.stacore.staconsultazionesrv.integration.dao.oracle.query.select.posizione.SelectPosizione">
+		<body>
+		<![CDATA[
+    select pos.id_posizione,
+      pos.id_operazione,
+      pos.id_tipo_evento,
+      ev.CODICE cod_tipo_evento,
+      ev.descrizione desc_tipo_evento,
+      pos.id_fonte,
+      fonte.codice cod_fonte,
+      fonte.descrizione DESC_fonte,
+      prop.ID_PROPRIETARIO_CORRENTE as id_proprietario,
+      vv.ID_VEICOLO_CORRENTE id_veicolo,
+      pos.data_decorrenza ,
+      pos.ID_TIPO_SOGG_PASSIVO,
+      sp.codice cod_sogg_passivo,
+      sp.descrizione DESC_sogg_passivo
+      /*, pos.stato,
+        pos.data_cancellazione */
+    ]]>
+			<field id="progCorrezioneT">, -1 PROGRESSIVO_CORREZIONE</field>
+			<field id="progCorrezioneS">, pos.PROGRESSIVO_CORREZIONE</field>
+		</body>
+		<from><![CDATA[
+    from TAU_T_Veicolo_Valido vv,
+      TAU_T_PROPRIETARIO_VALIDO prop,
+      TAU_D_TIPOEVENTO ev,
+      TAU_D_FONTE fonte,
+      TAU_D_TIPO_SOGG_PASSIVO sp
+    ]]>
+			<paramFrom id="tabT">, tau_t_posizione pos </paramFrom>
+			<paramFrom id="tabS">, tau_s_posizione pos </paramFrom>
+		</from>
+		<where><![CDATA[
+    where pos.ID_VEICOLO=vv.ID_VEICOLO
+      and pos.ID_PROPRIETARIO=prop.ID_PROPRIETARIO(+)
+      and ev.ID_TIPO_EVENTO = pos.ID_TIPO_EVENTO
+      and fonte.ID_FONTE = pos.ID_FONTE
+      and sp.ID_TIPO_SOGG_PASSIVO(+)=pos.ID_TIPO_SOGG_PASSIVO
+    ]]>
+			<paramWhere id="cancellazione">and pos.DATA_CANCELLAZIONE IS NULL
+			</paramWhere>
+			<paramWhere id="idOperazione">and pos.ID_OPERAZIONE = ? </paramWhere>
+			<paramWhere id="idProgressivoCorrezioneT"><![CDATA[and pos.PROGRESSIVO_CORREZIONE IN (select max(PROGRESSIVO_CORREZIONE)
+							   	 														    from TAU_S_POSIZIONE
+								 														    where ID_POSIZIONE = ?)]]></paramWhere>
+			<paramWhere id="idProgressivoCorrezioneS"><![CDATA[and pos.PROGRESSIVO_CORREZIONE IN (select max(PROGRESSIVO_CORREZIONE)
+							   	 														    from TAU_S_POSIZIONE
+								 														    where ID_POSIZIONE = ?
+								 														  		  and PROGRESSIVO_CORREZIONE < ?)]]></paramWhere>
+			<paramWhere id="idVeicolo">and vv.ID_VEICOLO_CORRENTE = ? </paramWhere>
+			<paramWhere id="idProprietario">and pos.ID_PROPRIETARIO = ? </paramWhere>
+			<paramWhere id="idPosizione">and pos.ID_POSIZIONE = ? </paramWhere>
+		</where>
+		<orderBy>order by id_veicolo, data_decorrenza desc /* faccio la
+			lettura al contrario */
+		</orderBy>
+	</query>
+
+	<query
+		name="it.csi.stacore.staconsultazionesrv.integration.dao.oracle.query.select.posizione.SelectEventoFineByIdVeicoloDate"><![CDATA[
+    select pos.id_tipo_evento,
+      ev.CODICE cod_tipo_evento,
+      ev.descrizione desc_tipo_evento,
+      pos.data_decorrenza
+    from tau_t_posizione pos,
+      TAU_T_Veicolo_Valido vv,
+      TAU_D_TIPOEVENTO ev,
+      TAU_D_FONTE fonte
+    where pos.ID_VEICOLO=vv.ID_VEICOLO
+      and ev.ID_TIPO_EVENTO = pos.ID_TIPO_EVENTO
+      and fonte.ID_FONTE = pos.ID_FONTE
+      and vv.ID_VEICOLO_CORRENTE = ?
+      and data_decorrenza = (select min(pos1.data_decorrenza) from tau_t_posizione pos1, TAU_T_Veicolo_Valido vv1
+                        where pos1.ID_VEICOLO=vv1.ID_VEICOLO
+                    and vv1.ID_VEICOLO_CORRENTE = ?
+                    and pos1.data_decorrenza > ? /* TO_DATE('01/01/1999', 'DD/MM/YYYY HH24:MI:SS') */
+                    and pos1.DATA_CANCELLAZIONE IS NULL )
+      and pos.DATA_CANCELLAZIONE IS NULL
+  ]]></query>
+
+
+<query name="it.csi.stacore.staconsultazionesrv.integration.dao.oracle.query.select.veicolo.SelectVeicoloByIdList">
+        <body><![CDATA[
+  select vei.id_veicolo,
+    vei.ID_TIPO_VEICOLO,
+    tipo.CODICE cod_tipoveicolo,
+    tipo.descrizione desc_tipoveicolo,
+    -- vei.ID_OPERAZIONE,
+    vei.ID_SUBENTRANTE,
+    vei.TELAIO,
+    vei.DATA_ULTIMA_REVISIONE,
+    tec.ID_DATI_TECNICI,
+    tec.ID_OPERAZIONE,
+    tec.ID_FONTE,
+    fonte.codice cod_fonte,
+    fonte.descrizione DESC_fonte,
+    tec.ID_TIPO_EVENTO,
+    ev.CODICE cod_tipo_evento,
+    ev.descrizione desc_tipo_evento,
+    tec.DATA_DECORRENZA,
+    /* tec.DATA_CANCELLAZIONE, */
+    tec.TARGA,
+    tec.SCADENZA_ATTRIBUITA,
+    tec.ID_DESTINAZIONE_VEICOLO,
+    dest.CODICE cod_destinazione_veicolo,
+    dest.DESCRIZIONE desc_destinazione_veicolo,
+    tec.ID_TIPO_USO,
+    uso.CODICE cod_tipo_uso,
+    uso.descrizione desc_tipo_uso,
+    tec.TRASPORTO_MERCI,
+    tec.ID_TIPO_CARROZZERIA,
+    car.CODICE cod_tipo_carrozzeria,
+    car.descrizione desc_tipo_carrozzeria,
+    tec.MASSA_COMPLESSIVA,
+    tec.KILO_WATT,
+    tec.PORTATA,
+    tec.ID_TIPO_COMBUSTIBILE,
+    comb.CODICE cod_combustibile,
+    comb.descrizione desc_combustibile,
+    comb.ID_GRUPPO_ALIMENTAZIONE,
+    tec.FLAG_SOSPENSIONE,
+    tec.NUMERO_POSTI,
+    tec.NUMERO_ASSI,
+    tec.POTENZA_FISCALE,
+    tec.CILINDRATA,
+    tec.FLAG_ECODIESEL,
+    tec.FLAG_GANCIO,
+    tec.MASSA_RIMORCHIABILE,
+    tec.FLAG_RIMORCHIABILITA,
+/*    tec.FLAG_IMPIANTO_GAS,*/
+    tec.ID_CATEGORIA_EURO,
+    euro.CODICE COD_CATEGORIA_EURO,
+    euro.DESCRIZIONE DESC_CATEGORIA_EURO,
+    tec.EMISSIONE_CO2,
+	tec.DATA_INSTAL_GPL,
+	tec.DATA_COLLAUDO_GPL,
+    combGas.CODICE cod_combustibile_gas,
+    combGas.descrizione desc_combustibile_gas,
+    combGas.ID_TIPO_COMBUSTIBILE id_combustibile_gas,
+	tec.DATA_DISINSTAL_GPL
+  ]]></body>
+        <from><![CDATA[
+  from TAU_T_DATI_TECNICI tec,
+    TAU_T_VEICOLO vei,
+        TAU_D_FONTE fonte,
+        TAU_D_TIPOEVENTO ev,
+    TAU_D_TIPOVEICOLO tipo,
+    TAU_D_DESTINAZIONEVEICOLO dest,
+    TAU_D_TIPOUSOVEICOLO uso,
+    TAU_D_TIPOCARROZZERIAVEICOLO car,
+    TAU_D_TIPOCOMBUSTIBILE comb,
+    TAU_D_TIPOCOMBUSTIBILE combGas,
+    TAU_D_CATEGORIA_EURO euro
+  ]]></from>
+        <where><![CDATA[
+  where vei.id_veicolo = tec.id_veicolo
+    and tec.ID_FONTE = fonte.ID_FONTE
+    and tec.ID_CATEGORIA_EURO = euro.ID_CAT_EURO (+)
+    and tec.ID_TIPO_EVENTO = ev.ID_TIPO_EVENTO
+    and vei.ID_TIPO_VEICOLO = tipo.ID_TIPO_VEICOLO
+    and tec.ID_DESTINAZIONE_VEICOLO = dest.ID_DESTINAZIONE_VEICOLO (+)
+    and tec.ID_TIPO_USO = uso.ID_TIPO_USO (+)
+    and tec.ID_TIPO_CARROZZERIA = car.ID_TIPO_CARROZZERIA (+)
+    and tec.ID_TIPO_COMBUSTIBILE = comb.ID_TIPO_COMBUSTIBILE (+)
+    and tec.ID_TIPO_COMBUSTIBILE_GAS = combGas.ID_TIPO_COMBUSTIBILE (+)
+    and vei.DATA_CANCELLAZIONE IS NULL
+    and tec.DATA_CANCELLAZIONE IS NULL
+    ]]>
+            <paramWhere id="idVeicolo">AND $$listVeicoli </paramWhere>
+        </where>
+        <orderBy>order by tec.id_veicolo, tec.DATA_DECORRENZA desc /* faccio la lettura al contrario */</orderBy>
+    </query>
+
+
+</list-query>

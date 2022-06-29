@@ -1,0 +1,13 @@
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/CacheKeyGenerator.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/NumberUtil.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/DateUtil.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/XmlSerializer.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/Tracer.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/XssUtil.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/UnitConversionUtil.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/adapter/DtoAdapterInterface.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/adapter/CommonDtoAdapter.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/Constants.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/ApplicationContextManager.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/Environment.java
+/opt/java/projects/studiofontanelli/stacore_staconsultazionesrv/staconsultazionesrv-util/src/main/java/it/csi/stacore/staconsultazionesrv/util/adapter/exception/DtoConversionException.java
