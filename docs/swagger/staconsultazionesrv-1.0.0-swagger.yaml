@@ -1,6 +1,10 @@
 swagger: '2.0'
 info:
+<<<<<<< HEAD
   description: API componente staconsultazionesrv
+=======
+  description: API componente staaudit
+>>>>>>> 4187d7cfb811770ff3b7868935cddd1b9abc4884
   version: 1.0.0
   title: STACONSULTAZIONESRV
   contact:
@@ -9,9 +13,12 @@ info:
 tags:
 - name: test
   description: test resources
+<<<<<<< HEAD
 - name: posizioni
   description: gestione posizioni
   
+=======
+>>>>>>> 4187d7cfb811770ff3b7868935cddd1b9abc4884
 
 # basePath: /api
 # schemes:
@@ -36,6 +43,7 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/ErrorDto'
+<<<<<<< HEAD
   /posizione/{id}:
     get:
       tags:
@@ -339,6 +347,9 @@ definitions:
       dummy:
         type: string
         description: Dummy property
+=======
+definitions:
+>>>>>>> 4187d7cfb811770ff3b7868935cddd1b9abc4884
   GenericResponse:
     type: object
     description: Risposta di un servizio generico
@@ -392,6 +403,10 @@ schemes:
  - https
  - http
 # Added by API Auto Mocking Plugin
+<<<<<<< HEAD
 # basePath: /andreafontanelli/stacomunicazionesrv/1.0.0
 # Added by API Auto Mocking Plugin
 basePath: /andreafontanelli/staconsultazionesrv/1.0.0
+=======
+basePath: /andreafontanelli/stacomunicazionesrv/1.0.0
+>>>>>>> 4187d7cfb811770ff3b7868935cddd1b9abc4884

@@ -21,10 +21,17 @@ package it.csi.stacore.staconsultazionesrv.util;
 
 public class Constants {
 
+<<<<<<< HEAD
     public static final String APPLICATION_CODE = "staconsultazionesrv";
     public static final String LOGGER_PREFIX = APPLICATION_CODE;
     public static final String APPLICATION_NAME = APPLICATION_CODE;
     
+=======
+    public static final String APPLICATION_CODE = "stassosrv";
+    public static final String LOGGER_PREFIX = APPLICATION_CODE;
+
+
+>>>>>>> 4187d7cfb811770ff3b7868935cddd1b9abc4884
  
 
 }
